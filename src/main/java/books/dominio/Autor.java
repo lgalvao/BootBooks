@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 @Getter
 public class Autor extends Base {
     String nome;
+    String biografia;
 
     @ManyToOne
     Pais pais;

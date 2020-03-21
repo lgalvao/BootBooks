@@ -1,7 +1,8 @@
 package books.dominio;
 
 import books.util.Base;
-import lombok.Getter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Lob;
@@ -10,22 +11,23 @@ import javax.persistence.OneToOne;
 import java.sql.Blob;
 
 @Entity
-@Getter
+@Data
+@NoArgsConstructor
 public class Edicao extends Base {
-    String isbn;
-    String titulo;
+    private String isbn;
+    private String titulo;
 
     @ManyToOne
-    Livro livro;
+    private Livro livro;
 
     @OneToOne
-    Idioma idioma;
+    private Idioma idioma;
 
     @OneToOne
-    Editora editora;
+    private Editora editora;
 
     @Lob
-    Blob capa;
+    private Blob capa;
 
-    int paginas;
+    private int paginas;
 }
