@@ -2,22 +2,31 @@ package books.dominio;
 
 import books.util.Base;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import java.util.List;
 
 @Getter
+@Setter
 @Entity
 public class Livro extends Base {
     String titulo;
+    String subtitulo;
+
+    @ManyToOne
+    Autor autorPrincipal;
 
     @OneToMany
-    List<Autor> autores;
+    List<Autor> outrosAutores;
 
-    @OneToOne
+    @ManyToOne
     Categoria categoria;
+
+    @ManyToOne
+    Serie serie;
 
     @OneToMany
     List<Tag> tags;
