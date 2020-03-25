@@ -1,9 +1,9 @@
-package books.util;
+package bb.util;
 
-import books.dominio.Autor;
-import books.dominio.Edicao;
-import books.dominio.Livro;
-import books.servicos.Inclusao;
+import bb.dominio.Autor;
+import bb.dominio.Edicao;
+import bb.dominio.Livro;
+import bb.servicos.Inclusao;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +15,12 @@ import java.io.Reader;
 
 @Service
 public class Importador {
+    final Inclusao inclusao;
+
     @Autowired
-    Inclusao inclusao;
+    public Importador(Inclusao inclusao) {
+        this.inclusao = inclusao;
+    }
 
     public void listarConteudoBruto() throws IOException {
         for (CSVRecord record : lerCsv()) {
@@ -58,8 +62,8 @@ public class Importador {
         }
     }
 
-    private Iterable<CSVRecord> lerCsv() throws IOException {
-        Reader in = new FileReader("/Users/leonardo/projetos/books/livros.csv");
+    Iterable<CSVRecord> lerCsv() throws IOException {
+        Reader in = new FileReader("/Users/leonardo/projetos/BootBooks/livros.csv");
         return CSVFormat.RFC4180.withFirstRecordAsHeader().parse(in);
     }
 }

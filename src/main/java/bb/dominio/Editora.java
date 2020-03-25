@@ -1,12 +1,12 @@
-package books.dominio;
+package bb.dominio;
 
-import books.util.Base;
+import bb.util.Base;
 import lombok.Getter;
 
 import javax.persistence.Entity;
 
 @Getter
 @Entity
-public class Tag extends Base {
+public class Editora extends Base {
     String nome;
 }

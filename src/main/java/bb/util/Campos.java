@@ -1,4 +1,4 @@
-package books.util;
+package bb.util;
 
 public enum Campos {
     BookId,
@@ -22,7 +22,7 @@ public enum Campos {
     ExclusiveShelf,
     MyReview,
     Spoiler,
-    PrivateNotes,
+    Notes,
     ReadCount,
     RecommendedFor,
     RecommendedBy,
@@ -30,6 +30,5 @@ public enum Campos {
     OriginalPurchaseDate,
     OriginalPurchaseLocation,
     Condition,
-    ConditionDescription,
-    BCID
+    ConditionDescription
 }

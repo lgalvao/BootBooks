@@ -1,6 +1,6 @@
-package books.dominio;
+package bb.dominio;
 
-import books.util.Base;
+import bb.util.Base;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,10 +11,11 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
-public class Leitura extends Base {
-    LocalDate inicio;
-    LocalDate termino;
-
+public class Avaliacao extends Base {
     @ManyToOne
-    Edicao edicao;
+    Livro livro;
+
+    LocalDate data;
+    int estrelas;
+    String texto;
 }

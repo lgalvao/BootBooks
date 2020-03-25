@@ -9,10 +9,10 @@
         <version>2.2.5.RELEASE</version>
     </parent>
 
-    <artifactId>Livros</artifactId>
+    <artifactId>bootbooks</artifactId>
     <groupId>lg</groupId>
-    <name>Livros</name>
-    <description>Muitos Livros</description>
+    <name>BootBooks</name>
+    <description>Exemplo de Sistema de Registro de Livros e Leituras usando Spring e Spring Boot</description>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
