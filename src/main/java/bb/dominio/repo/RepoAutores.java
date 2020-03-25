@@ -1,6 +1,6 @@
-package books.dominio.repo;
+package bb.dominio.repo;
 
-import books.dominio.Autor;
+import bb.dominio.Autor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

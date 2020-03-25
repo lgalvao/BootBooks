@@ -1,5 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="EntryPointsManager">
+    <entry_points version="2.0">
+      <entry_point TYPE="field" FQNAME="bb.dominio.Livro autorPrincipal" />
+      <entry_point TYPE="field" FQNAME="bb.dominio.Autor biografia" />
+      <entry_point TYPE="field" FQNAME="bb.dominio.Edicao capa" />
+      <entry_point TYPE="field" FQNAME="bb.dominio.Livro categoria" />
+      <entry_point TYPE="field" FQNAME="bb.dominio.Categoria categoriaMae" />
+      <entry_point TYPE="field" FQNAME="bb.dominio.Categoria categoriasFilhas" />
+      <entry_point TYPE="field" FQNAME="bb.dominio.Avaliacao data" />
+      <entry_point TYPE="field" FQNAME="bb.dominio.Edicao dataPublicacao" />
+      <entry_point TYPE="field" FQNAME="bb.dominio.Leitura edicao" />
+      <entry_point TYPE="field" FQNAME="bb.dominio.Estante edicoes" />
+      <entry_point TYPE="field" FQNAME="bb.dominio.Edicao editora" />
+      <entry_point TYPE="field" FQNAME="bb.dominio.Avaliacao estrelas" />
+      <entry_point TYPE="field" FQNAME="bb.util.Base id" />
+      <entry_point TYPE="field" FQNAME="bb.dominio.Edicao idioma" />
+      <entry_point TYPE="field" FQNAME="bb.util.ImportadorTest importador" />
+      <entry_point TYPE="field" FQNAME="bb.util.Importador inclusao" />
+      <entry_point TYPE="field" FQNAME="bb.dominio.Leitura inicio" />
+      <entry_point TYPE="field" FQNAME="bb.dominio.Edicao isbn" />
+      <entry_point TYPE="field" FQNAME="bb.dominio.Avaliacao livro" />
+      <entry_point TYPE="field" FQNAME="bb.dominio.Edicao livro" />
+      <entry_point TYPE="field" FQNAME="bb.dominio.Autor nome" />
+      <entry_point TYPE="field" FQNAME="bb.dominio.Categoria nome" />
+      <entry_point TYPE="field" FQNAME="bb.dominio.Editora nome" />
+      <entry_point TYPE="field" FQNAME="bb.dominio.Estante nome" />
+      <entry_point TYPE="field" FQNAME="bb.dominio.Idioma nome" />
+      <entry_point TYPE="field" FQNAME="bb.dominio.Pais nome" />
+      <entry_point TYPE="field" FQNAME="bb.dominio.Regiao nome" />
+      <entry_point TYPE="field" FQNAME="bb.dominio.Serie nome" />
+      <entry_point TYPE="field" FQNAME="bb.dominio.Tag nome" />
+      <entry_point TYPE="field" FQNAME="bb.dominio.Livro outrosAutores" />
+      <entry_point TYPE="field" FQNAME="bb.dominio.Edicao paginas" />
+      <entry_point TYPE="field" FQNAME="bb.dominio.Autor pais" />
+      <entry_point TYPE="field" FQNAME="bb.dominio.Regiao paises" />
+      <entry_point TYPE="field" FQNAME="bb.dominio.Pais regiao" />
+      <entry_point TYPE="field" FQNAME="bb.servicos.Inclusao repoAutores" />
+      <entry_point TYPE="field" FQNAME="bb.servicos.Inclusao repoEdicoes" />
+      <entry_point TYPE="field" FQNAME="bb.servicos.Inclusao repoLivros" />
+      <entry_point TYPE="field" FQNAME="bb.dominio.Livro serie" />
+      <entry_point TYPE="field" FQNAME="bb.dominio.Livro subtitulo" />
+      <entry_point TYPE="field" FQNAME="bb.dominio.Livro tags" />
+      <entry_point TYPE="field" FQNAME="bb.dominio.Leitura termino" />
+      <entry_point TYPE="field" FQNAME="bb.dominio.Avaliacao texto" />
+      <entry_point TYPE="field" FQNAME="bb.dominio.Edicao titulo" />
+      <entry_point TYPE="field" FQNAME="bb.dominio.Livro titulo" />
+    </entry_points>
+    <pattern value="bb.BootBooks" />
+    <pattern value="bb.dominio.Autor" />
+    <pattern value="bb.dominio.Avaliacao" />
+    <pattern value="bb.util.Base" />
+    <pattern value="bb.dominio.Categoria" />
+    <pattern value="bb.dominio.Edicao" />
+    <pattern value="bb.dominio.Editora" />
+    <pattern value="bb.dominio.Estante" />
+    <pattern value="bb.dominio.Idioma" />
+    <pattern value="bb.util.Importador" />
+    <pattern value="bb.util.ImportadorTest" />
+    <pattern value="bb.servicos.Inclusao" />
+    <pattern value="bb.dominio.Leitura" />
+    <pattern value="bb.dominio.Pais" />
+    <pattern value="bb.dominio.Regiao" />
+    <pattern value="bb.dominio.Serie" />
+    <pattern value="bb.dominio.Tag" />
+    <pattern value="bb.util.ImportadorTest" method="importar" />
+    <pattern value="bb.util.ImportadorTest" method="importarTitulosIsbn" />
+    <pattern value="bb.util.ImportadorTest" method="lerComEnum" />
+    <pattern value="bb.dominio.Livro" />
+    <pattern value="bb.BootBooks" method="main" />
+    <pattern value="bb.dominio.repo.RepoAutores" />
+    <pattern value="bb.dominio.repo.RepoEdicoes" />
+    <pattern value="bb.dominio.repo.RepoLivros" />
+  </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="JavaScriptSettings">
     <option name="languageLevel" value="ES6" />

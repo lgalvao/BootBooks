@@ -1,6 +1,6 @@
-package books.dominio;
+package bb.dominio;
 
-import books.util.Base;
+import bb.util.Base;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,9 +11,9 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class Regiao extends Base {
+public class Estante extends Base {
     String nome;
 
-    @OneToMany(mappedBy = "regiao")
-    List<Pais> paises;
+    @OneToMany
+    List<Edicao> edicoes;
 }

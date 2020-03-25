@@ -1,6 +1,6 @@
-package books.dominio;
+package bb.dominio;
 
-import books.util.Base;
+import bb.util.Base;
 import lombok.Getter;
 import lombok.Setter;
 

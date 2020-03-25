@@ -1,6 +1,6 @@
-package books.dominio;
+package bb.dominio;
 
-import books.util.Base;
+import bb.util.Base;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,21 +17,21 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 public class Edicao extends Base {
-    private String isbn;
-    private String titulo;
+    String isbn;
+    String titulo;
 
     @ManyToOne
-    private Livro livro;
+    Livro livro;
 
     @OneToOne
-    private Idioma idioma;
+    Idioma idioma;
 
     @OneToOne
-    private Editora editora;
+    Editora editora;
 
     @Lob
-    private Blob capa;
+    Blob capa;
 
-    private LocalDate dataPublicacao;
-    private int paginas;
+    LocalDate dataPublicacao;
+    int paginas;
 }

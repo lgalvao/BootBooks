@@ -1,24 +1,26 @@
-package books.servicos;
+package bb.servicos;
 
-import books.dominio.Autor;
-import books.dominio.Edicao;
-import books.dominio.Livro;
-import books.dominio.repo.RepoAutores;
-import books.dominio.repo.RepoEdicoes;
-import books.dominio.repo.RepoLivros;
+import bb.dominio.Autor;
+import bb.dominio.Edicao;
+import bb.dominio.Livro;
+import bb.dominio.repo.RepoAutores;
+import bb.dominio.repo.RepoEdicoes;
+import bb.dominio.repo.RepoLivros;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class Inclusao {
-    @Autowired
-    RepoLivros repoLivros;
+    final RepoLivros repoLivros;
+    final RepoEdicoes repoEdicoes;
+    final RepoAutores repoAutores;
 
     @Autowired
-    RepoEdicoes repoEdicoes;
-
-    @Autowired
-    RepoAutores repoAutores;
+    public Inclusao(RepoAutores repoAutores, RepoEdicoes repoEdicoes, RepoLivros repoLivros) {
+        this.repoLivros = repoLivros;
+        this.repoAutores = repoAutores;
+        this.repoEdicoes = repoEdicoes;
+    }
 
     public Edicao incluirEdicao(Livro livro, String isbn, String titulo) {
         Edicao edicao = new Edicao();

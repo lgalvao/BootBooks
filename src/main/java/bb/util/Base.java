@@ -1,4 +1,4 @@
-package books.util;
+package bb.util;
 
 import lombok.Getter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -15,7 +15,7 @@ import java.io.Serializable;
 public class Base implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    long id;
 
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
