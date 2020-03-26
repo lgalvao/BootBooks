@@ -17,6 +17,8 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 public class Edicao extends Base {
+    private static final long serialVersionUID = 1L;
+
     String isbn;
     String titulo;
 

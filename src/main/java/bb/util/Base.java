@@ -13,6 +13,8 @@ import java.io.Serializable;
 @MappedSuperclass
 @Getter
 public class Base implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     long id;

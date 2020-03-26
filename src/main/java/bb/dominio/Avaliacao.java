@@ -12,6 +12,8 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class Avaliacao extends Base {
+    private static final long serialVersionUID = 1L;
+
     @ManyToOne
     Livro livro;
 

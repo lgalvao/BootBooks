@@ -13,6 +13,8 @@ import java.util.List;
 @Getter
 @Setter
 public class Categoria extends Base {
+    private static final long serialVersionUID = 1L;
+
     String nome;
 
     @ManyToOne

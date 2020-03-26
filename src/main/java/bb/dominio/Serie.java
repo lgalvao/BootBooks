@@ -10,5 +10,7 @@ import javax.persistence.Entity;
 @Getter
 @Setter
 public class Serie extends Base {
+    private static final long serialVersionUID = 1L;
+
     String nome;
 }

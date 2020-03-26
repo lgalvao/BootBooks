@@ -13,6 +13,7 @@ import java.util.List;
 @Setter
 @Entity
 public class Livro extends Base {
+    private static final long serialVersionUID = 1L;
     String titulo;
     String subtitulo;
 

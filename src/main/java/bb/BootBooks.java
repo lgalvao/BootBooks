@@ -9,4 +9,3 @@ public class BootBooks {
         SpringApplication.run(BootBooks.class, args);
     }
 }
-

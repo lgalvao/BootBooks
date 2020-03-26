@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-BootBooks<bootbooks>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "bb.BootBooks",
+            "projectName": "bootbooks",
+            "args": ""
+        }
+    ]
+}

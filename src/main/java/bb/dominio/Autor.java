@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 @Getter
 @Setter
 public class Autor extends Base {
+    private static final long serialVersionUID = 1L;
+
     String nome;
     String biografia;
 
