@@ -1,9 +1,8 @@
 package bb.util;
 
-import bb.dominio.Autor;
-import bb.dominio.Edicao;
-import bb.dominio.Livro;
-import bb.servicos.Inclusao;
+import bb.dominio.*;
+import bb.dominio.repo.*;
+import lombok.extern.java.Log;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +13,25 @@ import java.io.IOException;
 import java.io.Reader;
 
 @Service
+@Log
 public class Importador {
-    final Inclusao inclusao;
+    private final RepoAutor repoAutor;
+    private final RepoAvaliacao repoAvaliacao;
+    private final RepoLivro repoLivro;
+    private final RepoEdicao repoEdicao;
+    private final RepoSerie repoSerie;
 
     @Autowired
-    public Importador(Inclusao inclusao) {
-        this.inclusao = inclusao;
+    public Importador(RepoAutor repoAutor,
+                      RepoAvaliacao repoAvaliacao, RepoEdicao repoEdicao,
+                      RepoLivro repoLivro,
+                      RepoSerie repoSerie) {
+
+        this.repoAutor = repoAutor;
+        this.repoAvaliacao = repoAvaliacao;
+        this.repoLivro = repoLivro;
+        this.repoEdicao = repoEdicao;
+        this.repoSerie = repoSerie;
     }
 
     public void listarConteudoBruto() throws IOException {
@@ -39,30 +51,47 @@ public class Importador {
     }
 
     public void importarDadosBasicos() throws Exception {
-        for (CSVRecord campo : lerCsv()) {
-            String titulo = campo.get(Campos.Title);
-            String isbn13 = campo.get(Campos.ISBN13);
-            String autorPrincipal = campo.get(Campos.Author);
+        for (CSVRecord linha : lerCsv()) {
+            String nomeAutor = linha.get(Campos.Author);
+            Autor autor = repoAutor.save(Autor.builder().nome(nomeAutor).build());
 
-            String serie = "";
+            String titulo = linha.get(Campos.Title);
+            String nomeSerie = "";
             int posicaoSerie = titulo.indexOf("(");
             if (posicaoSerie != -1) {
-                serie = titulo.substring(posicaoSerie + 1, titulo.length() - 1);
+                nomeSerie = titulo.substring(posicaoSerie + 1, titulo.length() - 1);
                 titulo = titulo.substring(0, posicaoSerie).trim();
             }
-            System.out.println(titulo + " - " + autorPrincipal + " - " + serie);
+            Serie serie = repoSerie.save(Serie.builder().nome(nomeSerie).build());
 
-            Autor autor = inclusao.incluirAutor(autorPrincipal);
-            Livro livro = inclusao.incluirLivro(titulo, autor);
-            Edicao edicao = inclusao.incluirEdicao(livro, isbn13, titulo);
+            String isbn13 = linha.get(Campos.ISBN13);
+            Livro livro = Livro.builder()
+                    .autorPrincipal(autor)
+                    .serie(serie)
+                    .titulo(titulo)
+                    .build();
+            livro = repoLivro.save(livro);
 
-            System.out.println(autor);
-            System.out.println(livro);
-            System.out.println(edicao);
+            String estrelasAvaliacao = linha.get(Campos.MyRating);
+            String textoAvaliacao = linha.get(Campos.MyReview);
+            if (!estrelasAvaliacao.isEmpty()) {
+                Avaliacao avaliacao = Avaliacao.builder()
+                        .texto(textoAvaliacao)
+                        .estrelas(Integer.parseInt(estrelasAvaliacao))
+                        .livro(livro).build();
+                repoAvaliacao.save(avaliacao);
+            }
+
+            Edicao edicao = Edicao.builder()
+                    .isbn(isbn13)
+                    .livro(livro)
+                    .titulo(titulo)
+                    .build();
+            repoEdicao.save(edicao);
         }
     }
 
-    Iterable<CSVRecord> lerCsv() throws IOException {
+    private Iterable<CSVRecord> lerCsv() throws IOException {
         Reader in = new FileReader("/Users/leonardo/projetos/BootBooks/livros.csv");
         return CSVFormat.RFC4180.withFirstRecordAsHeader().parse(in);
     }
