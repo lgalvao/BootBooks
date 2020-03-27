@@ -18,7 +18,6 @@ import java.time.LocalDate;
 public class Leitura extends Base {
     private static final long serialVersionUID = 1L;
 
-    LocalDate inicio;
     LocalDate termino;
 
     @ManyToOne

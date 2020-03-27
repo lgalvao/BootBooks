@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Service
 @Log
@@ -20,18 +22,20 @@ public class Importador {
     private final RepoLivro repoLivro;
     private final RepoEdicao repoEdicao;
     private final RepoSerie repoSerie;
+    private final RepoLeitura repoLeitura;
 
     @Autowired
     public Importador(RepoAutor repoAutor,
                       RepoAvaliacao repoAvaliacao, RepoEdicao repoEdicao,
                       RepoLivro repoLivro,
-                      RepoSerie repoSerie) {
+                      RepoSerie repoSerie, RepoLeitura repoLeitura) {
 
         this.repoAutor = repoAutor;
         this.repoAvaliacao = repoAvaliacao;
         this.repoLivro = repoLivro;
         this.repoEdicao = repoEdicao;
         this.repoSerie = repoSerie;
+        this.repoLeitura = repoLeitura;
     }
 
     public void listarConteudoBruto() throws IOException {
@@ -64,7 +68,6 @@ public class Importador {
             }
             Serie serie = repoSerie.save(Serie.builder().nome(nomeSerie).build());
 
-            String isbn13 = linha.get(Campos.ISBN13);
             Livro livro = Livro.builder()
                     .autorPrincipal(autor)
                     .serie(serie)
@@ -82,12 +85,21 @@ public class Importador {
                 repoAvaliacao.save(avaliacao);
             }
 
+            String isbn13 = linha.get(Campos.ISBN13);
+            String isbn = linha.get(Campos.ISBN);
+            int numPaginas = Integer.parseInt(linha.get(Campos.Pages));
             Edicao edicao = Edicao.builder()
-                    .isbn(isbn13)
+                    .isbn(isbn13.isEmpty() ? isbn : isbn13)
                     .livro(livro)
                     .titulo(titulo)
+                    .paginas(numPaginas)
                     .build();
             repoEdicao.save(edicao);
+
+            DateTimeFormatter formatador = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+            LocalDate dataLeitura = LocalDate.parse(linha.get(Campos.DateRead), formatador);
+            Leitura leitura = Leitura.builder().edicao(edicao).termino(dataLeitura).build();
+            repoLeitura.save(leitura);
         }
     }
 
