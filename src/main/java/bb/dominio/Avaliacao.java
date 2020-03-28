@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -21,5 +22,7 @@ public class Avaliacao extends Base {
     Livro livro;
 
     int estrelas;
+
+    @Lob
     String texto;
 }

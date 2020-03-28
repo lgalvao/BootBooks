@@ -22,7 +22,7 @@ class ImportadorTest {
     }
 
     @Test
-    void importarTitulosIsbn() throws Exception {
-        importador.importarDadosBasicos();
+    void importacaoGeral() throws Exception {
+        importador.importacaoGeral();
     }
 }

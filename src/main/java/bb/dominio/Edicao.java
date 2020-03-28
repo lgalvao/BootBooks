@@ -1,10 +1,7 @@
 package bb.dominio;
 
 import bb.util.Base;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Lob;
@@ -15,6 +12,7 @@ import java.time.LocalDate;
 
 @Entity
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,6 +20,7 @@ public class Edicao extends Base {
     private static final long serialVersionUID = 1L;
 
     String isbn;
+    String isbn13;
     String titulo;
 
     @ManyToOne
@@ -37,5 +36,5 @@ public class Edicao extends Base {
     Blob capa;
 
     LocalDate dataPublicacao;
-    int paginas;
+    Integer paginas;
 }

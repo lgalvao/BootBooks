@@ -14,8 +14,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="BootBooks" options="-parameters" />
-      <module name="books" options="-parameters" />
+      <module name="BootBooks" options="-parameters --enable-preview" />
     </option>
   </component>
 </project>

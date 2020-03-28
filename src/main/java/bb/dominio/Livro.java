@@ -21,6 +21,7 @@ public class Livro extends Base {
 
     String titulo;
     String subtitulo;
+    Integer anoPublicacao;
 
     @ManyToOne
     Autor autorPrincipal;

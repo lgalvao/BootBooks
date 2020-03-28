@@ -23,12 +23,13 @@ public class Importador {
     private final RepoEdicao repoEdicao;
     private final RepoSerie repoSerie;
     private final RepoLeitura repoLeitura;
+    private final RepoEditora repoEditora;
 
     @Autowired
     public Importador(RepoAutor repoAutor,
                       RepoAvaliacao repoAvaliacao, RepoEdicao repoEdicao,
                       RepoLivro repoLivro,
-                      RepoSerie repoSerie, RepoLeitura repoLeitura) {
+                      RepoSerie repoSerie, RepoLeitura repoLeitura, RepoEditora repoEditora) {
 
         this.repoAutor = repoAutor;
         this.repoAvaliacao = repoAvaliacao;
@@ -36,6 +37,7 @@ public class Importador {
         this.repoEdicao = repoEdicao;
         this.repoSerie = repoSerie;
         this.repoLeitura = repoLeitura;
+        this.repoEditora = repoEditora;
     }
 
     public void listarConteudoBruto() throws IOException {
@@ -54,11 +56,36 @@ public class Importador {
         }
     }
 
-    public void importarDadosBasicos() throws Exception {
+    private void limparTabelas() {
+        String script = "truncate table avaliacao restart identity cascade;" +
+                "truncate table categoria_categorias_filhas restart identity cascade;" +
+                "truncate table estante_edicoes restart identity cascade;" +
+                "truncate table estante restart identity cascade;" +
+                "truncate table leitura restart identity cascade;" +
+                "truncate table edicao restart identity cascade;" +
+                "truncate table editora restart identity cascade;" +
+                "truncate table idioma restart identity cascade;" +
+                "truncate table livro_outros_autores restart identity cascade;" +
+                "truncate table livro_tags restart identity cascade;" +
+                "truncate table livro restart identity cascade;" +
+                "truncate table autor restart identity cascade;" +
+                "truncate table categoria restart identity cascade;" +
+                "truncate table pais restart identity cascade;" +
+                "truncate table regiao restart identity cascade;" +
+                "truncate table serie restart identity cascade;" +
+                "truncate table tag restart identity cascade;";
+
+
+    }
+
+    public void importacaoGeral() throws Exception {
+        limparTabelas();
+
         for (CSVRecord linha : lerCsv()) {
             String nomeAutor = linha.get(Campos.Author);
             Autor autor = repoAutor.save(Autor.builder().nome(nomeAutor).build());
 
+            //TODO melhorar nomenclatura pq não é bem título nesse ponto
             String titulo = linha.get(Campos.Title);
             String nomeSerie = "";
             int posicaoSerie = titulo.indexOf("(");
@@ -66,12 +93,23 @@ public class Importador {
                 nomeSerie = titulo.substring(posicaoSerie + 1, titulo.length() - 1);
                 titulo = titulo.substring(0, posicaoSerie).trim();
             }
-            Serie serie = repoSerie.save(Serie.builder().nome(nomeSerie).build());
 
+            Serie serie = null;
+            if (!nomeSerie.isEmpty()) {
+                serie = repoSerie.save(Serie.builder().nome(nomeSerie).build());
+            }
+
+            String anoPublicacaoStr = linha.get(Campos.OriginalPublicationYear);
+
+            Integer anoPublicacao = null;
+            if (!anoPublicacaoStr.isEmpty()) {
+                anoPublicacao = Integer.parseInt(anoPublicacaoStr);
+            }
             Livro livro = Livro.builder()
                     .autorPrincipal(autor)
                     .serie(serie)
                     .titulo(titulo)
+                    .anoPublicacao(anoPublicacao)
                     .build();
             livro = repoLivro.save(livro);
 
@@ -85,21 +123,47 @@ public class Importador {
                 repoAvaliacao.save(avaliacao);
             }
 
-            String isbn13 = linha.get(Campos.ISBN13);
-            String isbn = linha.get(Campos.ISBN);
-            int numPaginas = Integer.parseInt(linha.get(Campos.Pages));
+            String isbn13 = linha.get(Campos.ISBN13)
+                    .replaceAll("=", "")
+                    .replaceAll("\"", "");
+
+            String isbn = linha.get(Campos.ISBN)
+                    .replaceAll("=", "")
+                    .replaceAll("\"", "");
+
+            String paginasStr = linha.get(Campos.Pages);
+            Integer paginas = null;
+            if (!paginasStr.isEmpty()) {
+                paginas = Integer.parseInt(paginasStr);
+            }
+
             Edicao edicao = Edicao.builder()
-                    .isbn(isbn13.isEmpty() ? isbn : isbn13)
+                    .isbn(isbn)
+                    .isbn13(isbn13)
                     .livro(livro)
                     .titulo(titulo)
-                    .paginas(numPaginas)
+                    .paginas(paginas)
                     .build();
             repoEdicao.save(edicao);
 
-            DateTimeFormatter formatador = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-            LocalDate dataLeitura = LocalDate.parse(linha.get(Campos.DateRead), formatador);
-            Leitura leitura = Leitura.builder().edicao(edicao).termino(dataLeitura).build();
-            repoLeitura.save(leitura);
+            String nomeEditora = linha.get(Campos.Publisher);
+            if (!nomeEditora.isEmpty()) {
+                Editora editora = repoEditora.findByNome(nomeEditora);
+                if (editora == null) {
+                    editora = Editora.builder().nome(nomeEditora).build();
+                    repoEditora.save(editora);
+                } else edicao.setEditora(editora);
+
+            }
+
+
+            String dataLeituraStr = linha.get(Campos.DateRead);
+            if (!dataLeituraStr.isEmpty()) {
+                DateTimeFormatter formatador = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+                LocalDate dataLeitura = LocalDate.parse(dataLeituraStr, formatador);
+                Leitura leitura = Leitura.builder().edicao(edicao).termino(dataLeitura).build();
+                repoLeitura.save(leitura);
+            }
         }
     }
 
