@@ -99,8 +99,7 @@ public class Importador {
                 serie = repoSerie.save(Serie.builder().nome(nomeSerie).build());
             }
 
-            String anoPublicacaoStr = linha.get(Campos.OriginalPublicationYear);
-
+            String anoPublicacaoStr = linha.get(Campos.OriginalPublicationYear).trim().strip();
             Integer anoPublicacao = null;
             if (!anoPublicacaoStr.isEmpty()) {
                 anoPublicacao = Integer.parseInt(anoPublicacaoStr);
@@ -113,9 +112,9 @@ public class Importador {
                     .build();
             livro = repoLivro.save(livro);
 
-            String estrelasAvaliacao = linha.get(Campos.MyRating);
-            String textoAvaliacao = linha.get(Campos.MyReview);
-            if (!estrelasAvaliacao.isEmpty()) {
+            String estrelasAvaliacao = linha.get(Campos.MyRating).trim().strip();
+            String textoAvaliacao = linha.get(Campos.MyReview).trim();
+            if (!estrelasAvaliacao.isEmpty() && !estrelasAvaliacao.equals("0")) {
                 Avaliacao avaliacao = Avaliacao.builder()
                         .texto(textoAvaliacao)
                         .estrelas(Integer.parseInt(estrelasAvaliacao))
@@ -131,7 +130,7 @@ public class Importador {
                     .replaceAll("=", "")
                     .replaceAll("\"", "");
 
-            String paginasStr = linha.get(Campos.Pages);
+            String paginasStr = linha.get(Campos.Pages).trim();
             Integer paginas = null;
             if (!paginasStr.isEmpty()) {
                 paginas = Integer.parseInt(paginasStr);
@@ -156,8 +155,7 @@ public class Importador {
 
             }
 
-
-            String dataLeituraStr = linha.get(Campos.DateRead);
+            String dataLeituraStr = linha.get(Campos.DateRead).trim();
             if (!dataLeituraStr.isEmpty()) {
                 DateTimeFormatter formatador = DateTimeFormatter.ofPattern("yyyy/MM/dd");
                 LocalDate dataLeitura = LocalDate.parse(dataLeituraStr, formatador);
